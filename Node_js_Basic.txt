@@ -1,0 +1,271 @@
+Using require()method for creating http module
+var http = require('http');
+
+*For creating Server
+=====================
+createServer()method is used.
+
+var http = require('http');
+
+//create a server object:
+http.createServer(function (req, res) {           //req-Stands for request from client server.
+  res.write('Hello World!'); //write a response to the client
+  res.end(); //end the response
+}).listen(8080);
+
+*Adding http header:-
+===================
+
+res.writeHead()         // Method is used for creating header.
+
+res.writeHead(200, {'Content-Type': 'text/html'});
+
+var http=require('http');
+http.createServer(function(req,res){
+ res.writeHead(200,{'Content-Type':'text/html'});
+res.write('Hello World!'); //write a response to the client
+  res.end(); //end the response
+}).listen(8080);
+
+
+*For reading the Query String:-
+=============================
+
+http.createServer()Method.
+
+
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write(req.url);
+  res.end();
+}).listen(8080);
+
+
+Node.js as FileSystem Module:-
+============================
+
+we Use the require()Method for this.
+ 
+var fs=require('fs');
+
+File  system is for 
+update,delete,open,read,write,rename files.
+
+
+***for reading files***
+
+
+fs.readFile()Method is uses.
+var http = require('http');
+var fs = require('fs');
+http.createServer(function (req, res) {
+  fs.readFile('Demo.html', function(err, data) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
+  });
+}).listen(8080);
+
+***For creating a File***
+=======================
+
+We have three Methods
+
+fs.appendFile()Method.
+fs.openFile()Method.
+fs.writeFile()Method.
+
+
+1)Using fs.appendFile()Method:-
+==============================
+
+var fs=require('fs');
+fs.appendFile('Node_js_Basic.txt','Hello',function(err){
+    if(err) throw err;
+    console.log('welcome');
+});
+
+
+
+2)Using fs.openFile()Method:-
+============================
+
+
+var fs=require('fs');
+fs.openFile('Node_js_Basic.txt','H',function(err,file){
+    if(err) throw err;
+    console.log('welcome');
+});
+
+
+
+3) using fs.writeFile()Method:-
+===============================
+
+var fs=require('fs');
+fs.writeFile('Node_js_Basic.txt','Hello',function(err){
+    if(err) throw err;
+    console.log('welcome');
+});
+
+
+***for Updating the File***
+we use Append()Method
+
+
+var fs=require('fs');
+fs.appendFile('Node_js_Basic.txt','It is My Text',function(err){
+
+ if(err) throw err;
+
+ console.log('Updated');
+ });
+
+
+
+*using write()Method:-
+=====================
+
+  var fs=require ('fs');
+  fs.writeFile('Node_js_Basic.txt','It is My Text',function(err){
+    if(err) throw err;
+   
+    console.log('Replaced');
+   });
+
+
+***Build_In_Url Module****
+
+for spliting the address into readable formats.
+
+
+var url=require('url');
+var adr='https://www.w3schools.com/nodejs/nodejs_url.asp';
+var q=url.parse(adr,true);
+console.log(q.hostname);
+console.log(q.pathname);
+
+
+*****NPM*****
+
+NPM Stands For node package manager,it provides in build packages also.
+
+packages contains all files and data that a module needed.
+
+for downloading any package we use npm install <Package name to download>.
+
+
+
+***Events***
+Every action on a computer is an event. Like when a connection is made or a file is opened.
+
+Objects in Node.js can fire events, like the readStream object fires events when opening and closing a file:
+
+
+***Event Module*****
+
+Node.js has a built-in module, called "Events", where you can create-, fire-, and listen for- your own events.
+
+To include the built-in Events module use the require() method. In addition, 
+all event properties and methods are an instance of an EventEmitter object. 
+To be able to access these properties and methods, create an EventEmitter object
+
+var events= require('events');
+var eventEmitter=new events.EventEmitter();
+
+var eventHandler= function(){
+
+console.log("Hello world");
+ 
+ }
+
+eventEmitter.on('world',eventHandler);
+eventEmitter.emit('world');
+
+
+
+***Uploading file****
+
+for Uploading files We need formidable module in node.js.
+
+ cmd:- npm install formidable
+
+
+var formidable= require('formidable');
+
+
+for creating an uploading form:-
+
+var http = require('http');   // first Step is to create http module.
+
+http.createServer(function (req, res) {    //  second step is to create temporary server.
+  res.writeHead(200, {'Content-Type': 'text/html'});  // Third Step is add header in the Format of html text.
+  res.write('<form action="fileupload" method="post" enctype="multipart/form-data">');// Fourth step is add Form tag and make Acttion of file upload.
+  res.write('<input type="file" name="filetoupload"><br>');  
+  res.write('<input type="submit">');  
+  res.write('</form>');
+  return res.end();
+}).listen(8080); // http//:localhost8080.
+
+
+***Parsing the Uploaded File***
+
+var http = require('http');
+var formidable = require('formidable');
+
+http.createServer(function (req, res) {
+  if (req.url == '/fileupload') {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      res.write('File uploaded');
+      res.end();
+    });
+  } else {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('<form action="fileupload" method="post" enctype="multipart/form-data">');
+    res.write('<input type="file" name="filetoupload"><br>');
+    res.write('<input type="submit">');
+    res.write('</form>');
+    return res.end();
+  }
+}).listen(8080);
+
+======================================================================================================================================================================
+
+****Node.js Connection With Database****
+
+first requirement is to install the database in our system.
+secondly install database driver
+
+ for eg:- npm install mysql
+
+third step import mysql module.
+
+ for eg:-  var mysql= require('mysql');
+
+****creating connection****
+var mysql = require('mysql');  //importing a module..
+
+var con = mysql.createConnection({  //creating connection..
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword"
+});
+
+con.connect(function(err) {
+  if (err) throw err;   
+  console.log("Connected!");
+});
+===========================================================================================================================================================================
+
+
+****NPM*****
+npm install:- To install dependencies.
+npm search:- show everything that is available in public registry.
+npm ls :-show everything we have installed.
+
+
+
+
+
